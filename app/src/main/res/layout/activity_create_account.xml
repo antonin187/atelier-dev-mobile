@@ -25,7 +25,7 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/qrCodeButton"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:contentDescription="@string/QRCode"
@@ -36,7 +36,7 @@
             app:srcCompat="@drawable/qrcode" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/formButton"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:text="@string/form"
