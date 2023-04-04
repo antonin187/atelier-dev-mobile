@@ -19,6 +19,9 @@
         android:theme="@style/Theme.AtelierDéveloppementMobile"
         tools:targetApi="31">
         <activity
+            android:name=".FormInscriptionActivity"
+            android:exported="false" />
+        <activity
             android:name=".QRCodeScannerActivity"
             android:exported="false" />
         <activity

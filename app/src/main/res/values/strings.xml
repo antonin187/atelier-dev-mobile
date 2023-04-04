@@ -20,4 +20,5 @@
     <string name="create_account">Créer un compte</string>
     <string name="QRCode">QR Code</string>
     <string name="form">Remplir le formulaire manuellement</string>
+    <string name="createUserButton">Créer</string>
 </resources>
