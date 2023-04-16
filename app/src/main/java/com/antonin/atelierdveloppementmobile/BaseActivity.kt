@@ -9,11 +9,6 @@ import android.widget.TextView
 
 open class BaseActivity : AppCompatActivity() {
 
-    fun setHeaderTitle(title: String?) {
-        val textView = findViewById<TextView>(R.id.textViewTitle)
-        textView.setText(title)
-    }
-
     fun showBack() {
         val imageViewBack = findViewById<ImageView>(R.id.imageViewBack)
         imageViewBack.visibility = View.VISIBLE

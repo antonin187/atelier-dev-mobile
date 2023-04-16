@@ -11,7 +11,7 @@
         android:elevation="2dp"
         android:background="@drawable/round_outline" >
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -21,7 +21,14 @@
             android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold"
-            android:paddingHorizontal="65dp" />
+            android:paddingHorizontal="65dp" />-->
+
+        <ImageView
+            android:id="@+id/logoHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
 
         <ImageView
             android:visibility="gone"
