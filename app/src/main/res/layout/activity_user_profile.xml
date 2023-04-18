@@ -9,33 +9,72 @@
 
     <include
         layout="@layout/layout_header"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/barcodeIV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/qrcode"
-            tools:layout_editor_absoluteX="173dp"
-            tools:layout_editor_absoluteY="333dp" />
-
-        <TextView
-            android:id="@+id/barcodeTV"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:layout_marginTop="10dp"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <EditText
+                style="@style/EditTextLogin"
+                android:id="@+id/firstnameEditText"
 
+                android:ems="10"
+                android:hint="Prénom"
+                android:inputType="text" />
+
+            <EditText
+                style="@style/EditTextLogin"
+                android:id="@+id/lastnameEditText"
+                android:ems="10"
+                android:hint="Nom"
+                android:inputType="text" />
+
+            <EditText
+                style="@style/EditTextLogin"
+                android:id="@+id/emailEditText"
+
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                style="@style/EditTextLogin"
+                android:id="@+id/addressEditText"
+
+                android:ems="10"
+                android:hint="Adresse"
+                android:inputType="text" />
+
+            <EditText
+                style="@style/EditTextLogin"
+                android:id="@+id/cpEditText"
+
+                android:ems="10"
+                android:hint="Code Postal"
+                android:maxLength="5"
+                android:inputType="number" />
+
+            <EditText
+                style="@style/EditTextLogin"
+                android:id="@+id/cityEditText"
+
+                android:ems="10"
+                android:hint="Ville"
+                android:inputType="text" />
+
+            <Button
+                style="@style/ExamHomeButton"
+                android:id="@+id/submitChangesButton"
+                android:layout_marginVertical="50dp"
+                android:text="@string/submitChanges" />
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

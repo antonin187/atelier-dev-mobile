@@ -27,17 +27,17 @@
 
             <EditText
                 style="@style/EditTextLogin"
-                android:id="@+id/lastnameEditText"
-                android:ems="10"
-                android:hint="Nom"
-                android:inputType="text" />
-
-            <EditText
-                style="@style/EditTextLogin"
                 android:id="@+id/firstnameEditText"
 
                 android:ems="10"
                 android:hint="Prénom"
+                android:inputType="text" />
+
+            <EditText
+                style="@style/EditTextLogin"
+                android:id="@+id/lastnameEditText"
+                android:ems="10"
+                android:hint="Nom"
                 android:inputType="text" />
 
             <EditText
@@ -78,6 +78,7 @@
                 android:id="@+id/fidelityCardEditText"
                 android:ems="10"
                 android:hint="Carte de fidélité"
+                android:maxLength="13"
                 android:inputType="number" />
 
             <Button

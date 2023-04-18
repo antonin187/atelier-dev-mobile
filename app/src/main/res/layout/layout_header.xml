@@ -38,6 +38,14 @@
             android:layout_height="60dp"
             app:srcCompat="?attr/actionModeCloseDrawable" />
 
+        <ImageView
+            android:id="@+id/userIcon"
+            android:visibility="invisible"
+            android:layout_alignParentRight="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:srcCompat="@android:drawable/radiobutton_off_background" />
+
     </RelativeLayout>
 
 </LinearLayout>

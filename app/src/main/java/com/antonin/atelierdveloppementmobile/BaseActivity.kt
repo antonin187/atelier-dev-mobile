@@ -16,4 +16,12 @@ open class BaseActivity : AppCompatActivity() {
             finish()
         })
     }
+
+    fun showProfile() {
+        val imageUserIcon = findViewById<ImageView>(R.id.userIcon)
+        imageUserIcon.visibility = View.VISIBLE
+        imageUserIcon.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+    }
 }
