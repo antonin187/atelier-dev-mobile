@@ -3,19 +3,19 @@ package com.antonin.atelierdveloppementmobile
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 
-class FormInscriptionActivity : BaseActivity() {
+class UserProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_form_inscription)
+        setContentView(R.layout.activity_user_profile)
 
-        val createUserButton = findViewById<Button>(R.id.createUserButton)
-        val loyaltyCardNumber = findViewById<EditText>(R.id.fidelityCardEditText);
+        showBack()
 
         val editTextFirstName=findViewById<EditText>(R.id.firstnameEditText)
         editTextFirstName.setText(readSharedPref("Prénom"))
@@ -30,8 +30,9 @@ class FormInscriptionActivity : BaseActivity() {
         val editTextCity=findViewById<EditText>(R.id.cityEditText)
         editTextCity.setText(readSharedPref("Ville"))
 
-        createUserButton.setOnClickListener(View.OnClickListener {
-            Log.d("LOYALITY", loyaltyCardNumber.text.toString())
+        val submitChangesButton = findViewById<Button>(R.id.submitChangesButton)
+
+        submitChangesButton.setOnClickListener(View.OnClickListener {
 
             val txt=editTextFirstName.text.toString()+
                     " / "+editTextLastName.text.toString()+
@@ -46,15 +47,14 @@ class FormInscriptionActivity : BaseActivity() {
             writeSharedPref("Code Postal",editTextCP.text.toString());
             writeSharedPref("Ville",editTextCity.text.toString());
 
+            finish()
 
-            val newIntent = Intent(application, TabBarActivity::class.java)
-            newIntent.putExtra("loyaltyNumber", loyaltyCardNumber.text.toString())
-            startActivity(newIntent)
         })
+
     }
 
     fun writeSharedPref(key:String,value:String){
-        val sharedPreferences: SharedPreferences= getSharedPreferences("account",Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = getSharedPreferences("account", Context.MODE_PRIVATE)
         val editor =sharedPreferences.edit()
         editor.putString(key,value)
         editor.apply()

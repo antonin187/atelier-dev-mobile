@@ -21,4 +21,7 @@
     <string name="QRCode">QR Code</string>
     <string name="form">Remplir le formulaire manuellement</string>
     <string name="createUserButton">Créer</string>
+    <string name="submitChanges">J\'enregistre les modifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
