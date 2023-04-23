@@ -24,4 +24,9 @@ open class BaseActivity : AppCompatActivity() {
             finish()
         })
     }
+
+    fun setHeaderText(text: String) {
+        val textHeader = findViewById<TextView>(R.id.textHeader)
+        textHeader.text = text
+    }
 }

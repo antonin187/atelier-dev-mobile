@@ -2,7 +2,9 @@ package com.antonin.atelierdveloppementmobile
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +16,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import okhttp3.*
 import org.json.JSONObject
+import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,61 +56,39 @@ class TabMagasinsFragment : Fragment() {
         }
     }
 
+    val shops = arrayListOf<Shop>()
 
-    val cities = "{\"cities\":[{\"city\":\"Bordeaux\",\"lan\":44.847807,\"lng\":-0.579472},\n" +
-            "{\"city\":\"Pau\",\"lan\":43.293295,\"lng\":-0.363570},\n" +
-            "{\"city\":\"Nantes\",\"lan\":47.215585,\"lng\":-1.554908},\n" +
-            "{\"city\":\"Paris\",\"lan\":48.854885,\"lng\":2.338646},\n" +
-            "{\"city\":\"Lille\",\"lan\":50.608719,\"lng\":3.063295},\n" +
-            "{\"city\":\"Marseille\",\"lan\":43.293551,\"lng\":5.377397},\n" +
-            "{\"city\":\"Nice\",\"lan\":43.701680,\"lng\":7.260711},\n" +
-            "{\"city\":\"Lyon\",\"lan\":45.759132,\"lng\":4.834604},\n" +
-            "{\"city\":\"Montpellier\",\"lan\":43.586120,\"lng\":3.896094},\n" +
-            "{\"city\":\"Toulouse\",\"lan\":43.533513,\"lng\":1.411209},\n" +
-            "{\"city\":\"Brest\",\"lan\":48.389353,\"lng\":-4.488616},\n" +
-            "{\"city\":\"Limoges\",\"lan\":45.838771,\"lng\":1.262108},\n" +
-            "{\"city\":\"Clermont-Ferrand\",\"lan\":45.780535,\"lng\":3.093242},\n" +
-            "{\"city\":\"Tours\",\"lan\":47.404355,\"lng\":0.688930},\n" +
-            "{\"city\":\"Strasbourg\",\"lan\":48.540395,\"lng\":7.727753}]}";
+    val callback = OnMapReadyCallback { googleMap ->
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-
-
-
-        //48.856614
-
-
-        val jsonCities = JSONObject(cities)
-        val items = jsonCities.getJSONArray("cities")
-
-        for (i in 0..items.length() - 1) {
-            val jsonCity = items.getJSONObject(i)
-            val city = MarkerOptions()
-            val cityLatLng = LatLng(jsonCity.optDouble("lan", 0.0), jsonCity.optDouble("lng", 0.0))
-            city.title(jsonCity.optString("city"))
-            city.position(cityLatLng)
-            googleMap.addMarker(city)
+        for (shop in shops) {
+            val marker = MarkerOptions()
+            val shopLatLng = LatLng(shop.latitude, shop.longitude)
+            marker.title(shop.name)
+            marker.position(shopLatLng)
+            googleMap.addMarker(marker)
         }
 
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(48.854885, 2.338646), 5f))
+
+        googleMap.setOnInfoWindowClickListener {
+
+
+            for (shop in shops) {
+                if(shop.latitude == it.position.latitude && shop.longitude == it.position.longitude) {
+                    val newIntent = Intent(activity, ShopDetailsActivity::class.java)
+                    newIntent.putExtra("nameShop", shop.name)
+                    newIntent.putExtra("imageShop", shop.pictureStore)
+                    newIntent.putExtra("address", shop.address)
+                    newIntent.putExtra("zipcode", shop.zipcode)
+                    newIntent.putExtra("city", shop.city)
+                    newIntent.putExtra("description", shop.description)
+                    startActivity(newIntent)
+                }
+            }
+
+            /*(activity?.application as EpsiApplication ).showToast(it.title.toString())*/
+
+        }
 
         this.googleMap = googleMap
         locationPermissionRequest.launch(
@@ -124,6 +106,47 @@ class TabMagasinsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        val okHttpClient: OkHttpClient = OkHttpClient.Builder().build()
+
+        val mRequestURL = "https://www.ugarit.online/epsi/stores.json"
+        val request = Request.Builder()
+            .url(mRequestURL)
+            .get()
+            .cacheControl(CacheControl.FORCE_NETWORK)
+            .build()
+
+        okHttpClient.newCall(request).enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val data = response.body?.string()
+
+                if(data!=null) {
+                    val jsShops = JSONObject(data)
+                    val jsArrayShops = jsShops.getJSONArray("stores")
+                    for (i in 0 until jsArrayShops.length()) {
+                        val js = jsArrayShops.getJSONObject(i)
+                        val shop = Shop(
+                            js.optInt("storeId", -1),
+                            js.optString("name", "not found"),
+                            js.optString("description", "not found"),
+                            js.optString("pictureStore", "not found"),
+                            js.optString("address", "not found"),
+                            js.optString("zipcode", "not found"),
+                            js.optString("city", "not found"),
+                            js.optDouble("longitude", 0.0),
+                            js.optDouble("latitude", 0.0)
+                        )
+                        shops.add(shop)
+                    }
+                }
+            }
+
+        })
+
     }
 
     override fun onCreateView(
@@ -136,8 +159,11 @@ class TabMagasinsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+
     }
 
     companion object {
