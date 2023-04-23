@@ -29,25 +29,29 @@ class FormInscriptionActivity : BaseActivity() {
         editTextCP.setText(readSharedPref("Code Postal"))
         val editTextCity=findViewById<EditText>(R.id.cityEditText)
         editTextCity.setText(readSharedPref("Ville"))
+        loyaltyCardNumber.setText(readSharedPref("Carte de fidélité"))
 
         createUserButton.setOnClickListener(View.OnClickListener {
-            Log.d("LOYALITY", loyaltyCardNumber.text.toString())
 
             val txt=editTextFirstName.text.toString()+
                     " / "+editTextLastName.text.toString()+
                     " / "+editTextEmail.text.toString()+" / "+
                     " / "+editTextAddress.text.toString()+" / "+
                     " / "+editTextCP.text.toString()+" / "+
-                    editTextCity.text.toString()
+                    " / "+editTextCity.text.toString()+" / "+
+                    loyaltyCardNumber.text.toString()
             writeSharedPref("Prénom",editTextFirstName.text.toString());
             writeSharedPref("Nom",editTextLastName.text.toString());
             writeSharedPref("Email",editTextEmail.text.toString());
             writeSharedPref("Adresse",editTextAddress.text.toString());
             writeSharedPref("Code Postal",editTextCP.text.toString());
             writeSharedPref("Ville",editTextCity.text.toString());
+            writeSharedPref("Carte de fidélité",loyaltyCardNumber.text.toString());
 
 
             val newIntent = Intent(application, TabBarActivity::class.java)
+            newIntent.putExtra("Prénom", editTextFirstName.text.toString())
+            newIntent.putExtra("Nom", editTextLastName.text.toString())
             newIntent.putExtra("loyaltyNumber", loyaltyCardNumber.text.toString())
             startActivity(newIntent)
         })
