@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 
 class UserProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,15 @@ class UserProfileActivity : BaseActivity() {
             writeSharedPref("Adresse",editTextAddress.text.toString());
             writeSharedPref("Code Postal",editTextCP.text.toString());
             writeSharedPref("Ville",editTextCity.text.toString());
+
+            if (readSharedPref("Carte de fidélité") != "") {
+                val newIntent = Intent(application, TabBarActivity::class.java)
+                newIntent.putExtra("Prénom", readSharedPref("Prénom"))
+                newIntent.putExtra("Nom", readSharedPref("Nom"))
+                newIntent.putExtra("loyaltyNumber", readSharedPref("Carte de fidélité"))
+                finish()
+                startActivity(newIntent)
+            }
 
             finish()
 

@@ -1,16 +1,17 @@
 package com.antonin.atelierdveloppementmobile
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.journeyapps.barcodescanner.BarcodeEncoder
 
 
 class TabBarActivity : BaseActivity() {
 
-    var tabCarteFragment=TabCarteFragment.newInstance("","")
+    var tabCarteFragment=TabCarteFragment.newInstance("","", "")
     val tabOffresFragment=TabOffresFragment.newInstance("","")
     val tabMagasinsFragment=TabMagasinsFragment.newInstance("","")
 
@@ -18,12 +19,15 @@ class TabBarActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /*var prenom = intent.extras?.getString("Prénom") ?: ""
+        var nom = intent.extras?.getString("Nom") ?: ""*/
+        var prenom = readSharedPref("Prénom") ?: ""
+        var nom = readSharedPref("Nom") ?: ""
         var loyaltyNumber = intent.extras?.getString("loyaltyNumber") ?: ""
 
-        tabCarteFragment=TabCarteFragment.newInstance(loyaltyNumber,"")
+        tabCarteFragment=TabCarteFragment.newInstance(loyaltyNumber, prenom, nom)
 
         setContentView(R.layout.activity_tab_bar)
-        showBack()
         showProfile()
 
         val textViewTabCarte = findViewById<TextView>(R.id.textViewTabCarte)
@@ -86,5 +90,9 @@ class TabBarActivity : BaseActivity() {
         fragmentTra.addToBackStack("TabMagasins")
         fragmentTra.replace(R.id.fragmentContent,tabMagasinsFragment)
         fragmentTra.commit()
+    }
+    fun readSharedPref(key:String):String{
+        val sharedPreferences: SharedPreferences = getSharedPreferences("account", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(key,"").toString()
     }
 }
