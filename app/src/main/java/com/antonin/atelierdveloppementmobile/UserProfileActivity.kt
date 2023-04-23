@@ -16,6 +16,7 @@ class UserProfileActivity : BaseActivity() {
         setContentView(R.layout.activity_user_profile)
 
         showBack()
+        setHeaderText("Compte")
 
         val editTextFirstName=findViewById<EditText>(R.id.firstnameEditText)
         editTextFirstName.setText(readSharedPref("Prénom"))
