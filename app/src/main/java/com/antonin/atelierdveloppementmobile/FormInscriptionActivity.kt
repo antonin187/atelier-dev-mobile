@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -13,6 +12,9 @@ class FormInscriptionActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_inscription)
+
+        showBack()
+        setHeaderText(getString(R.string.create_account))
 
         val createUserButton = findViewById<Button>(R.id.createUserButton)
         val loyaltyCardNumber = findViewById<EditText>(R.id.fidelityCardEditText);
