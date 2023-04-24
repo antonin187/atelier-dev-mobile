@@ -16,20 +16,41 @@ class FormInscriptionActivity : BaseActivity() {
 
         val createUserButton = findViewById<Button>(R.id.createUserButton)
         val loyaltyCardNumber = findViewById<EditText>(R.id.fidelityCardEditText);
-
         val editTextFirstName=findViewById<EditText>(R.id.firstnameEditText)
-        editTextFirstName.setText(readSharedPref("Prénom"))
         val editTextLastName=findViewById<EditText>(R.id.lastnameEditText)
-        editTextLastName.setText(readSharedPref("Nom"))
-        val editTextEmail=findViewById<EditText>(R.id.emailEditText)
-        editTextEmail.setText(readSharedPref("Email"))
         val editTextAddress=findViewById<EditText>(R.id.addressEditText)
-        editTextAddress.setText(readSharedPref("Adresse"))
+        val editTextEmail=findViewById<EditText>(R.id.emailEditText)
         val editTextCP=findViewById<EditText>(R.id.cpEditText)
-        editTextCP.setText(readSharedPref("Code Postal"))
         val editTextCity=findViewById<EditText>(R.id.cityEditText)
-        editTextCity.setText(readSharedPref("Ville"))
-        loyaltyCardNumber.setText(readSharedPref("Carte de fidélité"))
+
+        val isSetFromQrCode:Boolean = (intent.extras?.get("qrCode") ?: false) as Boolean
+
+        if(isSetFromQrCode){
+            val firstName = intent.extras?.getString("firstName") ?: ""
+            val lastName = intent.extras?.getString("lastName") ?: ""
+            val email = intent.extras?.getString("email") ?: ""
+            val address = intent.extras?.getString("address") ?: ""
+            val zipcode = intent.extras?.getString("zipcode") ?: ""
+            val city = intent.extras?.getString("city") ?: ""
+            val cardRef = intent.extras?.getString("cardRef") ?: ""
+            editTextFirstName.setText(firstName)
+            editTextLastName.setText(lastName)
+            editTextEmail.setText(email)
+            editTextAddress.setText(address)
+            editTextCP.setText(zipcode)
+            editTextCity.setText(city)
+            loyaltyCardNumber.setText(cardRef)
+        } else {
+            editTextFirstName.setText(readSharedPref("Prénom"))
+            editTextLastName.setText(readSharedPref("Nom"))
+            editTextEmail.setText(readSharedPref("Email"))
+            editTextAddress.setText(readSharedPref("Adresse"))
+            editTextCP.setText(readSharedPref("Code Postal"))
+            editTextCity.setText(readSharedPref("Ville"))
+            loyaltyCardNumber.setText(readSharedPref("Carte de fidélité"))
+        }
+
+
 
         createUserButton.setOnClickListener(View.OnClickListener {
 

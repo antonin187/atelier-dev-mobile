@@ -56,16 +56,6 @@ class TabBarActivity : BaseActivity() {
         })
 
         showTabCartes()
-
-        /*val loyaltyNumber = intent.extras!!.getString("loyaltyNumber")
-        val barcodeIV = findViewById<ImageView>(R.id.barcodeIV)
-        val barcodeTV = findViewById<TextView>(R.id.barcodeTV)
-
-        val barEncoder = BarcodeEncoder()
-        val bitmap = barEncoder.encodeBitmap(loyaltyNumber, BarcodeFormat.CODABAR, 900, 300)
-        barcodeIV.setImageBitmap(bitmap)
-
-        barcodeTV.text = loyaltyNumber*/
     }
 
     fun showTabCartes(){

@@ -86,8 +86,6 @@ class TabMagasinsFragment : Fragment() {
                 }
             }
 
-            /*(activity?.application as EpsiApplication ).showToast(it.title.toString())*/
-
         }
 
         this.googleMap = googleMap
