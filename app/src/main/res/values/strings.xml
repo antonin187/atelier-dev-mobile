@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Atelier Développement Mobile</string>
+
+    <string name="header_main_title">Epsi</string>
+    <string name="header_infos_title">Infos</string>
+    <string name="header_rayons_title">Rayons</string>
+
+    <string name="btn_text_info">Infos</string>
+    <string name="btn_text_produits">Produits</string>
+
+    <string name="text_description">Description :</string>
+
+    <string name="_link_text_student">https://www.epsi.fr</string>
+
+    <string name="create_account">Créer un compte</string>
+    <string name="QRCode">QR Code</string>
+    <string name="form">Remplir le formulaire manuellement</string>
+    <string name="createUserButton">Créer</string>
+    <string name="submitChanges">J\'enregistre les modifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
